@@ -17,7 +17,7 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name= $this->faker->sentence(6);
+        $name= $this->faker->word(6);
         return [
             'parent_id'=>null,
             'name'=>$name ,
