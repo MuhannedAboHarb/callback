@@ -1,27 +1,31 @@
 @extends('layouts.dashboard')
-@section('title', 'Create Category')
+@section('title', 'Edit Category')
 @section('breadcrumb')
     @parent
     <li class="breadcrumb-item ">Categories</li>
-    <li class="breadcrumb-item active">Create</li>
+    <li class="breadcrumb-item active">Edit</li>
 @endsection
 
 @section('content')
-    <form action="{{ route('dashboard.categories.store') }}" method="post">
+    <form action="{{ route('dashboard.categories.update', $category->id) }}" method="post">
 
         @csrf
+        {{-- Form Method Spoofing --}}
+        {{-- <input type="hidden" name="_method" value="put"> --}}
+        @method('put') {{-- نفس الي فوق ولكن هذه طريقة مختصرة ل تيمبليت --}}
 
         <div class="form-group mb-3">
             <label for="name">Category Name</label>
-            <input type="text" name="name" id="name" class="form-control">
+            <input type="text" name="name" id="name" value="{{ $category->name }}" class="form-control">
         </div>
 
         <div class="form-group mb-3">
             <label for="parent_id">Category Parent</label>
             <select name="parent_id" id="parent_id" class="form-control">
                 <option value="">No Parent</option>
-                @foreach ($parents as $parent )
-                <option value="{{ $parent->id }}">{{ $parent->name }}</option>
+                @foreach ($parents as $parent)
+                    <option value="{{ $parent->id }}" @if ($parent->id == $category->parent_id) selected @endif>
+                        {{ $parent->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -29,7 +33,7 @@
 
         <div class="form-group mb-3">
             <label for="description">Description</label>
-            <textarea name="description" id="description" class="form-control"></textarea>
+            <textarea name="description" id="description" class="form-control">{{ $category->description }}</textarea>
         </div>
 
 
