@@ -44,14 +44,35 @@ class CategoriesController extends Controller
         public function edit ($id)
         {
             $category=Category::find($id);
+            if($category==null)
+            {
+                abort(404);
+            }
             $parents=Category::where('id','<>',$id)
                 ->orderBy('name')
                 ->get();
             return view('dashboard.categories.edit',compact('category','parents'));
         }
 
-        public function update () {}
+        public function update (Request $request,$id)
+        {
+            $category = Category::find($id);
+            $category->name=$request->post('name');
+            $category->parent_id = $request->post('parent_id');
+            $category->description = $request->post('description');
+            $category->save();
+            return redirect(route('dashboard.categories.index'));
+
+        }
 
         //Delete
-        public function destroy () {}
+        public function destroy ($id)
+        {
+        //    $category=Category::find($id);
+        //    $category->delete();
+
+            // Category::where('id', '=' ,$id)->delete();
+            Category::destroy($id);
+            return redirect(route('dashboard.categories.index'));
+        }
 }

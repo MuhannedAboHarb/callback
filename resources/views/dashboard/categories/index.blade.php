@@ -20,7 +20,7 @@
                     <th>Name</th>
                     <th>Parent</th>
                     <th>Created At</th>
-                    <th>Action</th>
+                    <th colspan="2">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +33,13 @@
                         <td>{{ $category->created_at }}</td>
                         <td>
                             <a href="{{ route('dashboard.categories.edit',$category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                        </td>
+                        <td>
+                            <form action="{{ route('dashboard.categories.destroy',$category->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
