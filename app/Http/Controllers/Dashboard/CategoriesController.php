@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Unique;
+use Illuminate\Validation\ValidationException;
 
 class CategoriesController extends Controller
 {
@@ -41,14 +44,21 @@ class CategoriesController extends Controller
         // Create Strore
         public function store(Request $request)
         {
-            $rules=$this->role();
+            $rules=$this->role(null);
             $request->validate($rules);
-            $category=Category::create ([
-                'name'=>$request->post('name'),
-                'slug'=>Str::slug($request->post('name')),
-                'parent_id'=>$request->post('parent_id'),
-                'description'=>$request->post('description'),
-        ]);
+
+            $data=$request->except('image');
+
+            if($request->hasFile('image'))
+            {
+                $file = $request->file('image');
+                $data['image']= $this->upload($file);
+            }
+
+            $data['slug']=Str::slug($data['name']);
+
+            $category=Category::create($data);
+
          return redirect()->route('dashboard.categories.index');
         }
 
@@ -68,39 +78,67 @@ class CategoriesController extends Controller
 
         public function update (Request $request,$id)
         {
-            $rules=$this->role($id);
-            $request->validate($rules);
-
-
             $category = Category::find($id);
-            $category->name=$request->post('name');
-            $category->parent_id = $request->post('parent_id');
-            $category->description = $request->post('description');
-            $category->save();
-            return redirect(route('dashboard.categories.index'));
+            $data = $request->except('image');
+            $data['slug']= Str::slug($data['name']);
 
+            $old_image =$category->image;
+            if($request->hasFile('image'))
+            {
+                $file = $request->file('image');
+                $data['image']= $this->upload($file);
+            }
+            $category->update($data);
+            if($old_image && $old_image =! $category->image){
+                Storage::disk('uploads')->delete($old_image);
+            }
+            return redirect(route('dashboard.categories.index'));
         }
 
         //Delete
         public function destroy ($id)
         {
-            Category::destroy($id);
+            $category=Category::find($id);
+            $category->delete();
+            if($category->image)
+            {
+                /* Storage user libary facad */
+                Storage::disk('uploads')->delete($category->image);
+            }
             return redirect(route('dashboard.categories.index'));
         }
 
-        protected function role()
+
+        protected function role($id = 0)
         {
             return [
                 'name'=>[
                     'required',
                     'string',
-                    'max:14',
-                    // Rule::unique('categories','name')->ignore('id'),
-                    
+                    'max:255',
+                    Rule::unique('categories','name')->ignore($id ,'id'),
                 ] ,
                 'parent_id'=>'nullable|int|exists:categories,id',
-                'description'=>'nullable|string|min:5|max:100',
-                'image'=>'nullable|mimes:png,jpg|max:100',
+                'description'=>'nullable|string|min:5',
+                'image'=>'nullable|image',
             ];
         }
+
+        protected function upload(UploadedFile $file) // code update and store
+        {
+
+            if($file->isValid())
+            {
+                return $file->store('thumbnails',[
+                    'disk'=> 'uploads'
+                ]);
+            }
+            else
+            {
+                throw ValidationException::withMessages([
+                    'image'=>'File corrupted! ' ,
+                ]);
+            }
+        }
+
 }

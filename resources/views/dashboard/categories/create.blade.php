@@ -24,6 +24,7 @@
     <form action="{{ route('dashboard.categories.store') }}" method="post" enctype="multipart/form-data">
         @include('dashboard.categories._form', [
             'button' => 'Create',
+            'button2' => 'Cansel Create'
         ])
     </form>
 @endsection

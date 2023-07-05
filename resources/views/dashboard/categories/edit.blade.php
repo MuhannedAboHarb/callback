@@ -7,10 +7,11 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('dashboard.categories.update', $category->id) }}" method="post">
+    <form action="{{ route('dashboard.categories.update', $category->id) }}" method="post" enctype="multipart/form-data">
         @method('put')
         @include('dashboard.categories._form',[
-        'button'=>'Update'
+        'button'=>'Update',
+        'button2' => 'Cansel Update'
         ])
     </form>
 @endsection
