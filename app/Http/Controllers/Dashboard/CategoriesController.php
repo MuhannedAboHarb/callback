@@ -31,6 +31,14 @@ class CategoriesController extends Controller
         return view('dashboard.categories.index', compact('title','categories'));
     }
 
+
+        //Trash
+        public function trash()
+        {
+            $categories=Category::onlyTrashed()->latest('deleted_at');
+            return view('dashboard.categories.trash',compact('categories'));
+        }
+
         //Create
         public function create()
         {
@@ -65,7 +73,7 @@ class CategoriesController extends Controller
         //Update two function
         public function edit ($id)
         {
-            $category=Category::find($id);
+            $category=Category::withTrashed()->findOrFail($id);
             if($category==null)
             {
                 abort(404);
@@ -78,7 +86,7 @@ class CategoriesController extends Controller
 
         public function update (Request $request,$id)
         {
-            $category = Category::find($id);
+            $category = Category::withTrashed()->findOrFail($id);
             $data = $request->except('image');
             $data['slug']= Str::slug($data['name']);
 
@@ -100,11 +108,11 @@ class CategoriesController extends Controller
         {
             $category=Category::find($id);
             $category->delete();
-            if($category->image)
-            {
-                /* Storage user libary facad */
-                Storage::disk('uploads')->delete($category->image);
-            }
+            // if($category->image)
+            // {
+            //     /* Storage user libary facad */
+            //     Storage::disk('uploads')->delete($category->image);
+            // }
             return redirect(route('dashboard.categories.index'));
         }
 

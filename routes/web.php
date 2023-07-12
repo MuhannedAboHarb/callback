@@ -36,6 +36,10 @@ Route::group([
                Route::get('/',[CategoriesController::class,'index'])
                        ->name('index');
 
+                //Trash
+                Route::get('/trash',[CategoriesController::class,'trash'])
+                       ->name('trash');
+
                // Create
                Route::get('/create',[CategoriesController::class,'create'])
                        ->name('create');
