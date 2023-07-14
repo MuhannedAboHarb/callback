@@ -59,6 +59,14 @@ Route::group([
                //Destroy
                Route::delete('/{id}',[CategoriesController::class,'destroy'])
                        ->name('destroy') ;
+
+                //Restore
+                Route::patch('/{id}/restore',[CategoriesController::class,'restore'])
+                       ->name('restore') ;
+
+
+                 Route::get('/search',[CategoriesController::class,'search'])
+                    ->name('search');
        });
 
 });

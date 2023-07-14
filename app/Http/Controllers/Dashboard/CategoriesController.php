@@ -31,11 +31,10 @@ class CategoriesController extends Controller
         return view('dashboard.categories.index', compact('title','categories'));
     }
 
-
         //Trash
         public function trash()
         {
-            $categories=Category::onlyTrashed()->latest('deleted_at');
+            $categories=Category::onlyTrashed()->latest('deleted_at')->get();
             return view('dashboard.categories.trash',compact('categories'));
         }
 
@@ -86,7 +85,7 @@ class CategoriesController extends Controller
 
         public function update (Request $request,$id)
         {
-            $category = Category::withTrashed()->findOrFail($id);
+            $category=Category::withTrashed()->findOrFail($id);
             $data = $request->except('image');
             $data['slug']= Str::slug($data['name']);
 
@@ -106,13 +105,17 @@ class CategoriesController extends Controller
         //Delete
         public function destroy ($id)
         {
-            $category=Category::find($id);
-            $category->delete();
-            // if($category->image)
-            // {
-            //     /* Storage user libary facad */
-            //     Storage::disk('uploads')->delete($category->image);
-            // }
+            $category=Category::withTrashed()->findOrFail($id);
+            if( $category->trashed()){
+                $category->forceDelete();
+                if($category->image)
+                {
+                    /* Storage user libary facad */
+                     Storage::disk('uploads')->delete($category->image);
+                }
+            } else{
+                $category->delete();
+            }
             return redirect(route('dashboard.categories.index'));
         }
 
@@ -149,4 +152,11 @@ class CategoriesController extends Controller
             }
         }
 
+        public function restore(Request $request , $id)
+        {
+            $category=Category::onlyTrashed()->findOrFail($id); // لما استخدم فايند اور فيل فانا بدي ابحث في العناصر المحذوفة فقط
+            $category->restore();
+            return redirect(route('dashboard.categories.index'));
+
+        }
 }

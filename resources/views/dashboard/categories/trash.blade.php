@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Catgory Trash')
+@section('title', 'Catgories Trash')
 @section('breadcrumb')
     @parent
     <li class="breadcrumb-item light">Trash</li>
@@ -19,7 +19,6 @@
                     <th></th>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>description</th>
                     <th>Deleted At</th>
                     <th colspan="2">Action</th>
                 </tr>
@@ -36,10 +35,13 @@
                         </td>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
-                        <td>{{ $category->description }}</td>
                         <td>{{ $category->deleted_at }}</td>
                         <td>
-                            <a href="{{ route('dashboard.categories.edit',[$category->id]) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                            <form action="{{ route('dashboard.categories.restore',$category->id) }}" method="post">
+                                @csrf
+                                @method('patch')
+                                <button type="submit" class="btn btn-sm btn-outline-success">Restore</button>
+                            </form>
                         </td>
                         <td>
                             <form action="{{ route('dashboard.categories.destroy',$category->id) }}" method="post">

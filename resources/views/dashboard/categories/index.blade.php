@@ -7,9 +7,12 @@
 
 @section('content')
 
-    <div class="table-toobar mb-3">
-        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success">Create</a>
-        <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-primary">Trash</a>
+    <div class="table-toobar row mb-3 d-flex justify-content-between">
+        
+        <div>
+            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success">Create</a>
+            <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-primary">Trash</a>
+        </div>
     </div>
 
     <div class="table-responsive">
@@ -29,22 +32,23 @@
                 @foreach ($categories as $category)
                     <tr>
                         <td>
-                            @if($category->image)
+                            @if ($category->image)
                                 <img src="{{ Storage::disk('uploads')->url($category->image) }}" height="60">
-                             @else
-                             <img src="{{ asset('images/defluat.jpg') }}" height="60">
+                            @else
+                                <img src="{{ asset('images/defluat.jpg') }}" height="60">
                             @endif
                         </td>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
-                        <td>{{ $category->parent_name}}</td>
+                        <td>{{ $category->parent_name }}</td>
                         <td>{{ $category->description }}</td>
                         <td>{{ $category->created_at }}</td>
                         <td>
-                            <a href="{{ route('dashboard.categories.edit',[$category->id]) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                            <a href="{{ route('dashboard.categories.edit', [$category->id]) }}"
+                                class="btn btn-sm btn-outline-success">Edit</a>
                         </td>
                         <td>
-                            <form action="{{ route('dashboard.categories.destroy',$category->id) }}" method="post">
+                            <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
