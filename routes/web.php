@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +27,19 @@ Route::get('/NEWS',[HomeController::class,'news']);
 Route::group([
     'prefix'=>'/dashboard',
     'as'=>'dashboard.',
-    'namespace'=>'Dashboard'
+//     'namespace'=>'Dashboard'
 ] , function() {
-       Route::get('/',[DashboardController::class,'index']);
+       Route::get('/',[DashboardController::class,'index']);  
+
+
+       Route::get('/products/trash',[ProductsController::class,'trash'])
+                ->name('products.trash');
+
+        Route::patch('/products/{product}/restore',[ProductsController::class,'restore'])
+                ->name('products.restore');        
+                
+                //All Route Products
+                Route::resource('/product',ProductsController::class);  
 
        Route::prefix('/categories')->as('categories.')->group(function(){
 

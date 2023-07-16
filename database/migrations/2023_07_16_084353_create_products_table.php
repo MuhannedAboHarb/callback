@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->foreignId('category_id')-> constrained('categories','id');
-            $table->text('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('image')->nullable();
             $table->unsignedFloat('price',8,2);
             $table->unsignedFloat('compare_price')->nullable();
