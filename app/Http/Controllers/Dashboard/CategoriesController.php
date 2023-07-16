@@ -66,7 +66,9 @@ class CategoriesController extends Controller
 
             $category=Category::create($data);
 
-         return redirect()->route('dashboard.categories.index');
+         return redirect()
+         ->route('dashboard.categories.index')
+         ->with('success' , "Catgory ($category->name) Created");
         }
 
         //Update two function
@@ -99,7 +101,9 @@ class CategoriesController extends Controller
             if($old_image && $old_image =! $category->image){
                 Storage::disk('uploads')->delete($old_image);
             }
-            return redirect(route('dashboard.categories.index'));
+            return redirect()
+            ->route('dashboard.categories.index')
+             ->with('success' , "Catgory ($category->name) Updated");
         }
 
         //Delete
@@ -116,7 +120,9 @@ class CategoriesController extends Controller
             } else{
                 $category->delete();
             }
-            return redirect(route('dashboard.categories.index'));
+            return redirect()
+            ->route('dashboard.categories.index')
+             ->with('success' , "Catgory ($category->name) Deleted");
         }
 
 
@@ -156,7 +162,8 @@ class CategoriesController extends Controller
         {
             $category=Category::onlyTrashed()->findOrFail($id); // لما استخدم فايند اور فيل فانا بدي ابحث في العناصر المحذوفة فقط
             $category->restore();
-            return redirect(route('dashboard.categories.index'));
-
+            return redirect()
+                ->route('dashboard.categories.index')
+                 ->with('success' , "Catgory ($category->name) Restored");
         }
 }
