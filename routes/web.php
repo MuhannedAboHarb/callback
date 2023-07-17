@@ -39,7 +39,7 @@ Route::group([
                 ->name('products.restore');        
                 
                 //All Route Products
-                Route::resource('/product',ProductsController::class);  
+                Route::resource('/products',ProductsController::class);  
 
        Route::prefix('/categories')->as('categories.')->group(function(){
 
