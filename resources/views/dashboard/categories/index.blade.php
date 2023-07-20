@@ -7,14 +7,7 @@
 
 @section('content')
 
-    @if (Session::has('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            {{ Session::get('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+    <x-flash-message name="success" />
 
     <div class="table-toobar row mb-3 d-flex justify-content-between">
 
@@ -70,11 +63,3 @@
     </div>
 
 @endsection
-
-@push('script')
-    <script>
-        window.setInterval(function() {
-            $('.alert').alert('close')
-        }, 2000);
-    </script>
-@endpush()

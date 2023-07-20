@@ -4,18 +4,12 @@
 <div class="row">
     <div class="col-md-8">
         <div class="form-group mb-3">
-            <label for="name">Product Name</label>
-            <input type="text" name="name" id="name" value="{{ old('name', $product->name) }}"
-                class="form-control @error('name') is-invalid   @enderror">
-            @error('name')
-                <p class="invalid-feedback">{{ $message }}</p>
-            @enderror
+            <x-form.input name="name" value="{{ $product->name }}" lable="Product Name" />
         </div>
 
         <div class="form-group mb-3">
             <label for="category_id">Category</label>
-            <select name="category_id" id="category_id"
-                class="form-control @error('category_id') is-invalid   @enderror">
+            <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid   @enderror">
                 <option value="">Select One</option>
                 @foreach (\App\Models\Category::all() as $category)
                     <option value="{{ $category->id }}" @if ($category->id == old('category_id', $product->category_id)) selected @endif>
@@ -40,37 +34,21 @@
         <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <label for="price">Price</label>
-                    <input type="price" name="price" id="price" value="{{ old('price', $product->price) }}"
-                        class="form-control @error('price') is-invalid   @enderror">
-                    @error('price')
-                        <p class="invalid-feedback">{{ $message }}</p>
-                    @enderror
+                    <x-form.input type="number" name="price" value="{{ $product->price }}" lable="Price" />
                 </div>
             </div>
 
 
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <label for="compare_price">Compare Price</label>
-                    <input type="compare_price" name="compare_price" id="compare_price"
-                        value="{{ old('compare_price', $product->compare_price) }}"
-                        class="form-control @error('compare_price') is-invalid   @enderror">
-                    @error('compare_price')
-                        <p class="invalid-feedback">{{ $message }}</p>
-                    @enderror
+                    <x-form.input type="number" name="compare_price" value="{{ $product->compare_price }}" lable="Compare Price" />  
                 </div>
             </div>
 
 
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <label for="cost">Cost</label>
-                    <input type="cost" name="cost" id="cost" value="{{ old('cost', $product->cost) }}"
-                        class="form-control @error('cost') is-invalid   @enderror">
-                    @error('cost')
-                        <p class="invalid-feedback">{{ $message }}</p>
-                    @enderror
+                    <x-form.input type="number" name="cost" value="{{ $product->cost }}" lable="Cost" />
                 </div>
             </div>
 
@@ -157,8 +135,7 @@
 
                 <div class="mb-2">
                     @if ($product->image)
-                        <img id="thumbnail" src="{{ Storage::disk('uploads')->url($product->image) }}"
-                            height="150">
+                        <img id="thumbnail" src="{{ Storage::disk('uploads')->url($product->image) }}" height="150">
                     @else
                         <img id="thumbnail" src="{{ asset('images/defluat.jpg') }}" height="150">
                     @endif
