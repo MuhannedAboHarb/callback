@@ -41,6 +41,26 @@ return [
             'label'=>'main'
         ],
     ],
+
+    'product' => [
+        'title'=> 'Create Product',
+        'icon'=> 'fa fa-podcast',
+        'route'=>'/dashboard/products/create',
+        'badge'=>[
+            'class'=> 'success',
+            'label'=>'Add'
+        ],
+    ],
+
+    'products' => [
+        'title'=> ' Product',
+        'icon'=> 'fa fa-podcast',
+        'route'=>'/dashboard/products',
+        'badge'=>[
+            'class'=> 'info',
+            'label'=>'main'
+        ],
+    ],
     'settings' => [
         'title'=> 'Settings',
         'icon'=> 'fa fa-sitemap',

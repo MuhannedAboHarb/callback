@@ -1,10 +1,8 @@
-{{-- // تغير كل category_id to category_id
-//parent --}}
 @csrf
 <div class="row">
     <div class="col-md-8">
         <div class="form-group mb-3">
-            <x-form.input name="name" value="{{ $product->name }}" lable="Product Name" />
+            <x-form.input name="name" :value=" $product->name " lable="Product Name" />
         </div>
 
         <div class="form-group mb-3">
@@ -21,20 +19,17 @@
             @enderror
         </div>
 
+        {{-- textarea.blade --}}
 
-        <div class="form-group mb-3">
-            <label for="description">Description</label>
-            <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror">{{ old('description', $product->description) }}</textarea>
-            @error('description')
-                <p class="invalid-feedback">{{ $message }}</p>
-            @enderror
+        <div class="form-group mb-3">      
+            <x-form.textarea lable="Description" name="description" :value="$product->description" />
         </div>
 
         {{-- here down --}}
         <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <x-form.input type="number" name="price" value="{{ $product->price }}" lable="Price" />
+                    <x-form.input type="number" name="price" value="{{ $product->price }}" lable="Price" placeholder="price" />
                 </div>
             </div>
 

@@ -52,7 +52,7 @@ class ProductsController extends Controller
         // image
 
         $data = $request->except('image');
-        $data['slug']= Str::slug($data['name']);
+        // $data['slug']= Str::slug($data['name']);
 
         if($request->hasFile('image'))
         {
@@ -106,7 +106,7 @@ class ProductsController extends Controller
     //IMAGE
 
     $data = $request->except('image');
-    $data['slug']= Str::slug($data['name']);
+    // $data['slug']= Str::slug($data['name']);
 
     if($request->hasFile('image'))
     {
@@ -137,10 +137,10 @@ class ProductsController extends Controller
         if($product->trashed())
         {
             $product->forceDelete();
-            if($product->image)
-            {
-                Storage::disk('uploads')->delete($product->image);
-            }
+            // if($product->image)
+            // {
+            //     Storage::disk('uploads')->delete($product->image);
+            // }
         }
         else
         {

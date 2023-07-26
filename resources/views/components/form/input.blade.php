@@ -3,7 +3,8 @@
     'lable' => null,
     'name',
     'type' => 'text',
-    'value' => '',
+    'value' => '', 
+    'required' => 0 ,
 ])
 
 @php
@@ -12,7 +13,9 @@
 
 
 @if ($lable)
-    <label for="{{ $id }}">{{ $lable }}</label>
+    <x-form.lable :required="$required" > 
+        {{ $lable }} 
+    </x-form.lable>
 @endif
 <input type="{{ $type }}" name="{{ $name }}" id="{{ $id }}" value="{{ old($name, $value) }}"
     class="form-control @error($name) is-invalid   @enderror">

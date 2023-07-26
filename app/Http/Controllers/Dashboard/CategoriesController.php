@@ -62,7 +62,7 @@ class CategoriesController extends Controller
                 $data['image']= $this->upload($file);
             }
 
-            $data['slug']=Str::slug($data['name']);
+            // $data['slug']=Str::slug($data['name']);
 
             $category=Category::create($data);
 
@@ -89,7 +89,7 @@ class CategoriesController extends Controller
         {
             $category=Category::withTrashed()->findOrFail($id);
             $data = $request->except('image');
-            $data['slug']= Str::slug($data['name']);
+            // $data['slug']= Str::slug($data['name']);
 
             $old_image =$category->image;
             if($request->hasFile('image'))
@@ -112,11 +112,11 @@ class CategoriesController extends Controller
             $category=Category::withTrashed()->findOrFail($id);
             if( $category->trashed()){
                 $category->forceDelete();
-                if($category->image)
-                {
-                    /* Storage user libary facad */
-                     Storage::disk('uploads')->delete($category->image);
-                }
+                // if($category->image)
+                // {
+                //     /* Storage user libary facad */
+                //      Storage::disk('uploads')->delete($category->image);
+                // }
             } else{
                 $category->delete();
             }
