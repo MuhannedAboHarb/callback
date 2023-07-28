@@ -61,13 +61,4 @@ return [
             'label'=>'main'
         ],
     ],
-    'settings' => [
-        'title'=> 'Settings',
-        'icon'=> 'fa fa-sitemap',
-        'route'=>'/dashboard/settings',
-        'badge'=>[
-            'class'=> 'primary',
-            'label'=>'settings'
-        ],
-    ],
 ];

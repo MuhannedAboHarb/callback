@@ -103,7 +103,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         John Pierce
                                         <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
                                     </h3>
-                                    <p class="text-sm">I got your message bro</p>
+                                        <p class="text-sm">I got your message bro</p>
                                     <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                 </div>
                             </div>
@@ -191,7 +191,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                       @if(Auth::check())
+                            <a href="#" class="d-block">{{ Auth::user()->name }}</a> |
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout').submit()">Logout</a>
+                            <form id="logout" action="{{ route('logout') }}" method="post" style="display: none">
+                                @csrf
+                            </form>
+                         @else
+                         <a href="{{ route('login') }}">Login</a>   
+                       @endif
                     </div>
                 </div>
 
@@ -218,42 +227,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Starter Pages
+                                    Menu Dashboard
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Active Page</p>
-                                    </a>
-                                </li>
+                            @foreach (config('nav') as $item)
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
+                                    <a href="{{ $item['route'] }}" class="nav-link">
+                                        <i class="{{ $item['icon'] }}"></i>
+                                        <p>
+                                            {{ $item['title'] }}
+                                            {{-- @if (array_key_exists('badge', $item)) --}}
+                                            @if (isset($item['badge']))
+                                                <span
+                                                    class="right badge badge-{{ $item['badge']['class'] }}">{{ $item['badge']['label'] }}
+                                                </span>
+                                            @endif
+                                        </p>
                                     </a>
                                 </li>
-                            </ul>
+                            @endforeach
+
                         </li>
 
-                        @foreach (config('nav') as $item)
-                            <li class="nav-item">
-                                <a href="{{ $item['route'] }}" class="nav-link">
-                                    <i class="{{ $item['icon'] }}"></i>
-                                    <p>
-                                        {{ $item['title'] }}
-                                        {{-- @if (array_key_exists('badge', $item)) --}}
-                                        @if (isset($item['badge']))
-                                            <span
-                                                class="right badge badge-{{ $item['badge']['class'] }}">{{ $item['badge']['label'] }}
-                                            </span>
-                                        @endif
-                                    </p>
-                                </a>
-                            </li>
-                        @endforeach
+                    </ul>
+                    </li>
+
 
                     </ul>
                 </nav>
@@ -321,7 +322,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 
     @yield('scripts')
