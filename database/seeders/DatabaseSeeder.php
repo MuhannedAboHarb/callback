@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(CategoriesTableSeeder::class);
 
-        Category::factory(2)->create();
+        // Category::factory(2)->create();
+
+        \App\Models\Admin::factory(2)->create();
     }
 }
