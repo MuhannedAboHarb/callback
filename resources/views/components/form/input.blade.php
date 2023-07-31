@@ -17,7 +17,7 @@
         {{ $lable }} 
     </x-form.lable>
 @endif
-<input type="{{ $type }}" name="{{ $name }}" id="{{ $id }}" value="{{ old($name, $value) }}"
+<input type="{{ $type }}" name="{{ $name }}" id="{{ $id }}" value="{{ $type == 'password' ? '' :  old($name, $value) }}"
     class="form-control @error($name) is-invalid   @enderror">
 @error($name)
     <p class="invalid-feedback">{{ $message }}</p>

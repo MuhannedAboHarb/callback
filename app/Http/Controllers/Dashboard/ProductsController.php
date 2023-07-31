@@ -16,6 +16,13 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct()
+     {
+        $this->middleware(['verified'])->except(['index' , 'show']);
+     }
+
+
     public function index()
     {
         //

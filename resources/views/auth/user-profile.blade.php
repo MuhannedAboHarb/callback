@@ -5,6 +5,10 @@
 @section('content')
     
 
+    <p>
+        <a href="{{ route('change-password') }}">Change Password</a>
+    </p>
+
     <x-flash-message />
 
     <form action="{{ route('profile.update') }}" method="post">

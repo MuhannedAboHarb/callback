@@ -39,6 +39,12 @@ return [
         'route'=>'/profile',
     ],
 
+    'Change Password' => [
+        'title'=> 'Change Password',
+        'icon'=> 'fa fa-key',
+        'route'=>'/change-password',
+    ],
+
 
     'products' => [
         'title'=> 'Product',

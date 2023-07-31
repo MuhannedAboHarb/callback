@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ChangeuserPasswordController;
 use App\Http\Controllers\Auth\UserProfileController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -85,16 +86,30 @@ Route::group([
 });
 
 
-
+        /// Changed Profile   ///
 Route::get('/profile', [UserProfileController::class, 'index'])
         ->name('profile') 
         ->middleware(['auth:web,admin', 'password.confirm']);
 
-
-        
 Route::patch('/profile',[UserProfileController::class, 'update']) 
         ->name('profile.update') 
         ->middleware(['auth:web,admin', 'password.confirm']);
+
+
+
+
+       
+        /// Changed Password   ///
+Route::get('/change-password', [ChangeuserPasswordController::class, 'index'])
+        ->name('change-password') 
+        ->middleware(['auth:web,admin']);
+
+Route::put('/change-password',[ChangeuserPasswordController::class, 'update']) 
+        ->name('change-password.update') 
+        ->middleware(['auth:web,admin']);
+
+
+
 
 
 
