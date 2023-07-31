@@ -32,6 +32,14 @@ return [
         'icon'=> 'fa fa-shopping-basket',
         'route'=>'/dashboard/orders',
     ],
+
+    'profiles' => [
+        'title'=> 'Update Profile',
+        'icon'=> 'fa fa-user',
+        'route'=>'/profile',
+    ],
+
+
     'products' => [
         'title'=> 'Product',
         'icon'=> 'fa fa-podcast',

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\UserProfileController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProductsController;
@@ -83,14 +84,30 @@ Route::group([
 
 });
 
+
+
+Route::get('/profile', [UserProfileController::class, 'index'])
+        ->name('profile') 
+        ->middleware(['auth:web,admin', 'password.confirm']);
+
+
+        
+Route::patch('/profile',[UserProfileController::class, 'update']) 
+        ->name('profile.update') 
+        ->middleware(['auth:web,admin', 'password.confirm']);
+
+
+
+
+
 Route::get('/dashboard/breeze', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';
