@@ -24,8 +24,11 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/NEWS',[HomeController::class,'news']);
+Route::get('/', function () {
+        return view('welcome');
+    });
 
+    
 Route::group([
     'prefix'=>'/dashboard',
     'as'=>'dashboard.',
