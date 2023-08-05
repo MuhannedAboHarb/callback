@@ -1,20 +1,23 @@
 @props([
-    'name' => 'success' , 'class' => 'success'
+    'name' => 'success',
+    'class' => 'success',
 ])
 
 @if (Session::has($name))
-        <div class="alert alert-{{ $class }} alert-dismissible fade show">
-            {{ Session::get($name) }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-@endif
-
-@push('script')
     <script>
-        window.setInterval(function() {
-            $('.alert').alert('close')
-        }, 2000);
+        document.addEventListener("DOMContentLoaded", function() {
+            let icon = 'success';
+            let title = 'Attention please';
+            let message = "{{ Session::get($name) }}";
+
+            Swal.fire({
+                position: 'end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: true,
+                showCloseButton: true,
+                timer: false
+            })
+        });
     </script>
-@endpush()
+@endif
