@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     //
-    public function news(){
-        return view('new');
+    public function index(){
+        return view('store.home');
     }
 }

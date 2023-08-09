@@ -48,7 +48,32 @@ class CategoriesController extends Controller
             ]);
         }
 
-        // Create Strore
+        // second code for store method
+        // public function store(Request $request)
+        // {
+        //     $rules = $this->role(null);
+        //     $request->validate($rules);
+        
+        //     $data = $request->except('image');
+        
+        //     if ($request->hasFile('image')) {
+        //         $file = $request->file('image');
+        //         if (!$file->isValid()) {
+        //             throw ValidationException::withMessages([
+        //                 'image' => 'File corrupted! ',
+        //             ]);
+        //         }
+        //         $data['image'] = $this->upload($file);
+        //     }
+        
+        //     $category = Category::create($data);
+        
+        //     return redirect()
+        //         ->route('dashboard.categories.index')
+        //         ->with('success', "Category ($category->name) Created");
+        // }
+
+
         public function store(Request $request)
         {
             $rules=$this->role(null);

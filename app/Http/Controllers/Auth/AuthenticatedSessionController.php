@@ -15,7 +15,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View // show login
+    public function create(): View
     {
         return view('auth.login');
     }
@@ -23,7 +23,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse //Check for login
+    public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
 

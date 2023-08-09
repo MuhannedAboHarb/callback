@@ -35,7 +35,7 @@
                     <tr>
                         <td>
                             @if ($category->image)
-                                <img src="{{ Storage::disk('uploads')->url($category->image) }}" height="60">
+                                <img src="{{ asset('uploads/' . $category->image) }}" height="60">
                             @else
                                 <img src="{{ asset('images/defluat.jpg') }}" height="60">
                             @endif
