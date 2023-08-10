@@ -55,6 +55,34 @@ class Product extends Model
     }
 
 
+    public function getImageUrlAttribute()
+{
+    if (! $this->image) {
+        return asset('images/defluat.jpg');
+    }
+
+    if (Str::startsWith($this->image, ['http://', 'https://'])) {
+        return $this->image;
+    }
+
+    return asset('uploads/' . $this->image);
+}
+
+
+// public function setNameAttribute($value)
+// {
+//     $this->attributes['name']=Str::upper($value);
+// }
+
+
+public function getDiscountPercentAttribute()
+{
+    if(! $this->compare_price)
+    {
+        return 0 ;
+    }
+    return number_format($this-> price / $this->compare_price * 100, 2) ;
+}
 
 
 }

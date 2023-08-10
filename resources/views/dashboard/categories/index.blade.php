@@ -34,11 +34,7 @@
                 @foreach ($categories as $category)
                     <tr>
                         <td>
-                            @if ($category->image)
-                                <img src="{{ asset('uploads/' . $category->image) }}" height="60">
-                            @else
-                                <img src="{{ asset('images/defluat.jpg') }}" height="60">
-                            @endif
+                            <img src="{{ $category->image_url }}" height="60">
                         </td>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>

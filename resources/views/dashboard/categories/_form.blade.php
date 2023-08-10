@@ -3,7 +3,8 @@
     <div class="col-md-8">
         <div class="form-group mb-3">
             <label for="name">Category Name</label>
-            <input type="text" name="name" id="name" value="{{ old('name', $category->name) }}" class="form-control @error('name') is-invalid   @enderror">
+            <input type="text" name="name" id="name" value="{{ old('name', $category->name) }}"
+                class="form-control @error('name') is-invalid   @enderror">
             @error('name')
                 <p class="invalid-feedback">{{ $message }}</p>
             @enderror
@@ -33,26 +34,23 @@
         </div>
 
 
-       <div class="col-md-4">
-        <div class="form-group mb-3">
+        <div class="col-md-4">
+            <div class="form-group mb-3">
 
 
-            <div class="mb-2">
-                @if($category->image)
-                    <img id="thumbnail" src="{{ Storage::disk('uploads')->url($category->image) }}" height="150">
-                @else
-                    <img id="thumbnail" src="{{ asset('images/defluat.jpg') }}" height="150">
-                @endif
+                <div class="mb-2">
+                    <img id="thumbnail" src="{{ $category->image_url }}" height="150">
+                </div>
+                {{-- up --}}
+
+                <label for="image">Thumbnail</label>
+                <input type="file" name="image"
+                    id="image"class="form-control @error('image') is-invalid @enderror">
+                @error('image')
+                    <p class="invalid-feedback">{{ $message }}</p>
+                @enderror
             </div>
-            {{-- up --}}
-
-            <label for="image">Thumbnail</label>
-            <input  type="file"  name="image" id="image"class="form-control @error('image') is-invalid @enderror">
-            @error('image')
-                <p class="invalid-feedback">{{ $message }}</p>
-            @enderror
         </div>
-       </div>
 
 
         <div class="form-group mb-3">

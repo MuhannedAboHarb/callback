@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-8">
         <div class="form-group mb-3">
-            <x-form.input name="name" :value=" $product->name " lable="Product Name" />
+            <x-form.input name="name" :value="$product->name" lable="Product Name" />
         </div>
 
         <div class="form-group mb-3">
@@ -21,7 +21,7 @@
 
         {{-- textarea.blade --}}
 
-        <div class="form-group mb-3">      
+        <div class="form-group mb-3">
             <x-form.textarea lable="Description" name="description" :value="$product->description" />
         </div>
 
@@ -29,14 +29,16 @@
         <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <x-form.input type="number" name="price" value="{{ $product->price }}" lable="Price" placeholder="price" />
+                    <x-form.input type="number" name="price" value="{{ $product->price }}" lable="Price"
+                        placeholder="price" />
                 </div>
             </div>
 
 
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <x-form.input type="number" name="compare_price" value="{{ $product->compare_price }}" lable="Compare Price" />  
+                    <x-form.input type="number" name="compare_price" value="{{ $product->compare_price }}"
+                        lable="Compare Price" />
                 </div>
             </div>
 
@@ -129,11 +131,7 @@
 
 
                 <div class="mb-2">
-                    @if ($product->image)
-                        <img id="thumbnail" src="{{ Storage::disk('uploads')->url($product->image) }}" height="150">
-                    @else
-                        <img id="thumbnail" src="{{ asset('images/defluat.jpg') }}" height="150">
-                    @endif
+                    <img id="thumbnail" src="{{ $product->image_url }}" height="150">
                 </div>
 
                 <label for="image">Thumbnail</label>

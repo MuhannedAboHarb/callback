@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     //
     public function index(){
-        return view('store.home');
+        $newproducts = Product::latest()->limit(8)->get();
+        $topSales = Product::inRandomOrder()->limit(10)->get();
+
+        return view('store.home',[
+            'newproducts' => $newproducts ,
+            'topSales'=>$topSales
+        ]);
     }
 }

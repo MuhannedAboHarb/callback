@@ -33,5 +33,25 @@ class Category extends Model
             $category->slug=Str::slug($category->name);
         });
     }
+    
+    public function getImageUrlAttribute()
+{
+    if (! $this->image) {
+        return asset('images/defluat.jpg');
+    }
+
+    if (Str::startsWith($this->image, ['http://', 'https://'])) {
+        return $this->image;
+    }
+
+    return asset('uploads/' . $this->image);
+}
+
+// public function setNameAttribute($value)
+// {
+//     $this->attributes['name']=Str::upper($value);
+// }
+
+
 
 }
