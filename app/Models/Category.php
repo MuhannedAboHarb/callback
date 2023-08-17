@@ -33,7 +33,21 @@ class Category extends Model
             $category->slug=Str::slug($category->name);
         });
     }
+
+
+
+    //Relations
+    // One to Mane => one Category Has many Products
+    public function products()
+    {                                       // Product         Categories      
+        return $this->hasMany(Product::class, 'category_id' , 'id' );
+        // return $this->hasMany(Product::class);
+    }
     
+
+
+
+
     public function getImageUrlAttribute()
 {
     if (! $this->image) {

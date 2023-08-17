@@ -35,6 +35,14 @@ class Product extends Model
     }
 
 
+    //Inverse One to Many : Product Belongs To Category
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id' , 'id');
+        // return $this->belongsTo(Category::class);
+    }
+
+
     public static function statusOptions()
     {
      return [

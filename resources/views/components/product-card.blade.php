@@ -32,7 +32,7 @@
       </div>
       <div class="ps-shoe__detail"><a class="ps-shoe__name" href="#">{{ $product->name }}</a>
         <p class="ps-shoe__categories">
-          <a href="#">Men shoes</a>,<a href="#"> Nike</a>,<a href="#"> Jordan</a>
+          <a href="{{ route('products',$product->category->slug) }}"> {{ $product->category->name }} </a>
         </p>
         <span class="ps-shoe__price">
             @if($product->compare_price)
