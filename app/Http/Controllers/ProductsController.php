@@ -25,4 +25,18 @@ class ProductsController extends Controller
             'products'=>$products
         ]);
     }
+
+    public function show(Category $category , Product $product)
+    {
+        return view('store.products.show',compact('category','product'));
+    }
+
+    // public function show($category_slug ,  $product_slug)
+    // {
+    //     $category = Category::whereSlug($category_slug)->firstOrFail();
+    //     $product = $category->products()-> whereSlug($product_slug)->firstOrFail();
+    //     return view('store.products.show',compact('category','product'));
+    // }
+
+
 }

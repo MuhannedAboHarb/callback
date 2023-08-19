@@ -32,6 +32,10 @@ Route::get('/',[HomeController::class,'index'])
 Route::get('/products/{category:slug?}',[ControllersProductsController::class,'index'])
         ->name('products'); 
 
+
+Route::get('/products/{category:slug?}/{product:slug}',[ControllersProductsController::class,'show'])
+        ->name('products.show');         
+
     
 Route::group([
     'prefix'=>'/dashboard',
