@@ -71,6 +71,12 @@
 
             <div class="col-6">
                 <div class="form-group">
+                    <x-form.textarea  name="address" :value=" $user->profile->address " lable="Address" />    
+                </div>        
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
                     <x-form.lable>Country</x-form.lable>
                     <select name="country_code" id="country_code" class="form-control">
                         <option value="">Select Country</option>

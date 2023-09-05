@@ -130,6 +130,11 @@
             <div class="form-group mb-3">
 
 
+                <div class="form-group mb-6" >
+                    <label for="tags">Tags</label>
+                    <x-form.textarea name="tags" />
+                </div>
+
                 <div class="mb-2">
                     <img id="thumbnail" src="{{ $product->image_url }}" height="150">
                 </div>

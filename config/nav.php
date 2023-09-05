@@ -2,10 +2,12 @@
 return [
     'dashboard' => [
         'title'=> 'Dashboard',
+        'route.active'=> 'dashboard.',
         'icon'=> 'fa fa-shower',
         'route'=>'/dashboard',
     ],
     'categories' => [
+        'route.active'=> 'dashboard.categories.*',
         'title'=> 'Categories',
         'icon'=> 'for fa-circle nav-icon',
         'route'=>'/dashboard/categories',
@@ -16,58 +18,37 @@ return [
     ],
 
 
-    'create' => [
-        'title'=> 'Create Category',
-        'icon'=> 'fa fa-shopping-basket',
-        'route'=>'/dashboard/categories/create',
-        'badge'=>[
-            'class'=> 'success',
-            'label'=>'Add'
-        ],
-    ],
 
 
     'orders' => [
         'title'=> 'Orders',
+        'route.active'=> 'dashboard.orders.',
         'icon'=> 'fa fa-shopping-basket',
         'route'=>'/dashboard/orders',
     ],
 
     'profiles' => [
         'title'=> 'Update Profile',
+        'route.active' => 'profile.',
         'icon'=> 'fa fa-user',
         'route'=>'/profile',
     ],
 
     'Change Password' => [
         'title'=> 'Change Password',
+        'route.active' => 'change-password.',
         'icon'=> 'fa fa-key',
         'route'=>'/change-password',
     ],
 
 
-    'products' => [
-        'title'=> 'Product',
-        'icon'=> 'fa fa-podcast',
-        'route'=>'/dashboard/products',
-        'badge'=>[
-            'class'=> 'danger',
-            'label'=>'main'
-        ],
-    ],
 
-    'product' => [
-        'title'=> 'Create Product',
-        'icon'=> 'fa fa-podcast',
-        'route'=>'/dashboard/products/create',
-        'badge'=>[
-            'class'=> 'success',
-            'label'=>'Add'
-        ],
-    ],
+
+
 
     'products' => [
         'title'=> ' Product',
+        'route.active'=> 'dashboard.products.*',
         'icon'=> 'fa fa-podcast',
         'route'=>'/dashboard/products',
         'badge'=>[

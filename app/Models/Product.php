@@ -89,7 +89,7 @@ public function getDiscountPercentAttribute()
     {
         return 0 ;
     }
-    return number_format($this-> price / $this->compare_price * 100, 2) ;
+    return number_format( ($this-> price - $this->compare_price ) / $this->compare_price * 100, 2) ;
 }
 
 

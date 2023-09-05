@@ -8,7 +8,7 @@
         <div class="ps-badge"><span>New</span></div>
       @endif
         @if($product->compare_price)
-        <div class="ps-badge ps-badge--sale @if($new) ps-badge--2nd @endif "><span>  -{{  $product->discount_percent }}% </span></div>
+        <div class="ps-badge ps-badge--sale @if($new) ps-badge--2nd @endif "><span>  {{  $product->discount_percent }}% </span></div>
       @endif  
       <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
       <img src="{{ $product->image_url }}" alt="">

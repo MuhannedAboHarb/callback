@@ -8,6 +8,7 @@ class Money
     public static function format($value)
     {
         $formatter = new NumberFormatter('en', NumberFormatter::CURRENCY);
-        return $formatter->formatCurrency($value, 'USD');
+        return $formatter->formatCurrency($value, 'EUR');
+        //USD OR EUR OR ILS
     }
 }
