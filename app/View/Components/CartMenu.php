@@ -21,7 +21,7 @@ class CartMenu extends Component
     public function __construct()
     {
        $this->cart = Cart::with('product')
-        ->where('cookie_id' , '=' , $this->getCookieId())
+        ->where('cookie_id' , '=' ,app('cart.cookie_id'))
         ->orWhere('user_id' , '=' , Auth::id())
         ->get();
 
@@ -38,14 +38,5 @@ class CartMenu extends Component
         return view('components.cart-menu');
     }
 
-    protected function getCookieId()
-    {
-        $cookie_id = Cookie::get('cart_id');
-        if( ! $cookie_id)
-        {
-            $cookie_id = Str::uuid();               // بتخزن البيانات لمدة شهر
-            Cookie::queue('cart_id', $cookie_id , 24 *60 *30); //لما ترسل الرسبونسف  عند لليوزر تروح تكتب عند اليوزر على مستوى المتصفح
-        }
-        return $cookie_id ; 
-    }
+   
 }

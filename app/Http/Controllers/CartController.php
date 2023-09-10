@@ -24,8 +24,10 @@ class CartController extends Controller
             'quantity' => ['integer','min:1']
         ]);
 
+        $cook_id = app('cart.cookie_id'); // app()->make(' cart.cookie_id') or App::make('cart.cookie_id')
+
         $cart = Cart::where([
-            'cookie_id'=> $this->getCookieId(),
+            'cookie_id'=> $cook_id,
             'product_id'=> $request->post('product_id'),
         ])->first();
 
@@ -33,7 +35,7 @@ class CartController extends Controller
         {
             Cart::create([
                 'id'=> Str::uuid() , //genrate random id 
-                'cookie_id'=> $this->getCookieId(),
+                'cookie_id'=> $cook_id,
                 'user_id'=> Auth::id(), // بترجع نل في حال لايوجد اي دي
                 'product_id'=> $request->post('product_id'),
                 'quantity'=> $request->post('quantity',1), // الواحد قيمة افتراضية
@@ -46,15 +48,6 @@ class CartController extends Controller
     }
 
 
-    protected function getCookieId()
-    {
-        $cookie_id = Cookie::get('cart_id');
-        if( ! $cookie_id)
-        {
-            $cookie_id = Str::uuid();               // بتخزن البيانات لمدة شهر
-            Cookie::queue('cart_id', $cookie_id , 24 *60 *30); //لما ترسل الرسبونسف  عند لليوزر تروح تكتب عند اليوزر على مستوى المتصفح
-        }
-        return $cookie_id ; 
-    }
+
 
 }
