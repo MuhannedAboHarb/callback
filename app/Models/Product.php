@@ -92,5 +92,35 @@ public function getDiscountPercentAttribute()
     return number_format( ($this-> price - $this->compare_price ) / $this->compare_price * 100, 2) ;
 }
 
+// Many-to-Many: Product has  many tags
+public function tags()
+{
+    return $this->belongsToMany(
+        Tag::class, //Related Model
+        'product_tag', //pivot table name 
+        'product_id', //Carrent model FK in pivot table
+        'tag_id', //Related model FK in pivot table
+        'id', //Local (PK)  current model
+        'id' //Local (PK)  related model
+    );
+}
+
+
+public function cartUsers()
+{
+    return  $this->belongsToMany(
+    User::class , 
+        'carts' ,
+        'product_id' ,
+         'user_id' ,
+         'id' ,
+         'id' ,
+    );
+}
+
+public function getUrlAttribute()
+{
+    return  route('products.show', [$this->category->slug, $this->slug]);
+}
 
 }

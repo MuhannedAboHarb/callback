@@ -21,3 +21,13 @@
         });
     </script>
 @endif
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            window.setTimeout(function() {
+                $('.success').alert('close')
+            }, 7000);
+        });
+    </script>
+@endpush

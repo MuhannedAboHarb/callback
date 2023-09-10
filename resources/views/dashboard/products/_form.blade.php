@@ -140,7 +140,7 @@
                 </div>
 
                 <label for="image">Thumbnail</label>
-                <input type="file" name="image"
+                <input type="file" name="image" style="display: none"
                     id="image"class="form-control @error('image') is-invalid @enderror">
                 @error('image')
                     <p class="invalid-feedback">{{ $message }}</p>
