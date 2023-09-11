@@ -40,7 +40,10 @@ Route::get('/products/{category:slug?}/{product:slug}',[ControllersProductsContr
 Route::get('/cart',[CartController::class , 'index'])
         ->name('cart');
 
-Route::post('cart' , [CartController::class , 'store']);        
+Route::post('cart' , [CartController::class , 'store']);
+
+Route::delete('cart/{id}' , [CartController::class , 'destroy'])
+        ->name('card.destroy'); 
     
 Route::group([
     'prefix'=>'/dashboard',

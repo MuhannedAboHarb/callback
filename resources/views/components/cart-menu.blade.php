@@ -4,7 +4,14 @@
         <div class="ps-cart__listing">
             <div class="ps-cart__content">
                 @foreach ($cart as $item)
-                    <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
+                    <div class="ps-cart-item">
+                        <form action="{{ route('card.destroy', $item->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <a class="ps-cart-item__close" href="#"
+                                onclick="event.preventDefault(); this.closest('form').submit();">
+                            </a>
+                        </form>
                         <div class="ps-cart-item__thumbnail"><a href="{{ $item->product->url }}"></a><img
                                 src="{{ $item->product->image_url }}" alt=""></div>
                         <div class="ps-cart-item__content"><a class="ps-cart-item__title"
@@ -16,12 +23,13 @@
                         </div>
                     </div>
                 @endforeach
+
             </div>
             <div class="ps-cart__total">
                 <p>Number of items: <span>{{ $cart->count() }}</span></p>
                 <p>Item Total: <span>{{ Money::format($total) }}</span></p>
             </div>
-            <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">Check out<i
+            <div class="ps-cart__footer"><a class="ps-btn" href="{{ route('cart') }}">Check out<i
                         class="ps-icon-arrow-left"></i></a></div>
         </div>
     </div>
