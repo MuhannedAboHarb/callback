@@ -1,4 +1,4 @@
-<x-store-layout>
+<x-store-layout :title="$category->name ?? 'Products'">
     <div class="ps-products-wrap">
         @if($category->name)
             <h3>{{$category->name}}</h3>

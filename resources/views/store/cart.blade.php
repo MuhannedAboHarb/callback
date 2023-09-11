@@ -1,4 +1,4 @@
-<x-store-layout>
+<x-store-layout title="Cart">
     <div class="ps-content pt-80 pb-80">
         <div class="ps-container">
             <div class="ps-cart-listing">

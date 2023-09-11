@@ -12,10 +12,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link href="apple-touch-icon.png" rel="apple-touch-icon">
     <link href="favicon.png" rel="icon">
-    <meta name="author" content="Nghia Minh Luong">
+    <meta name="author" content="Nghia Minh Luong"> 
     <meta name="keywords" content="Default Description">
     <meta name="description" content="Default keyword">
-    <title>{{ config('app.name') }}</title>
+    <title> {{ $title? $title . ' | ' : '' }} {{ config('app.name') }}</title>
     <!-- Fonts-->
     <link
         href="https://fonts.googleapis.com/css?family=Archivo+Narrow:300,400,700%7CMontserrat:300,400,500,600,700,800,900"

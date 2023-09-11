@@ -1,5 +1,5 @@
 @props(['product', 'new' => false])
-<x-store-layout>
+<x-store-layout :title="$product->name">
 
     <div class="test">
         <div class="container">
