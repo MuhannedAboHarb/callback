@@ -90,10 +90,12 @@ class CategoriesController extends Controller
             // $data['slug']=Str::slug($data['name']);
 
             $category=Category::create($data);
-
-         return redirect()
-         ->route('dashboard.categories.index')
-         ->with('success' , "Catgory ($category->name) Created");
+            
+        session()->flash('alert-type', $category ? "success" : "danger"); 
+         session()->flash('message',$category ? "Create Successfully" : "Create falid");
+         return redirect() ->back();
+        //  ->route('dashboard.categories.index') ;
+        //  ->with('success' , "Catgory ($category->name) Created");
         }
 
         //Update two function
@@ -112,6 +114,9 @@ class CategoriesController extends Controller
 
         public function update (Request $request,$id)
         {
+            $rules=$this->role(null);
+            $request->validate($rules);
+
             $category=Category::withTrashed()->findOrFail($id);
             $data = $request->except('image');
             // $data['slug']= Str::slug($data['name']);
@@ -126,9 +131,11 @@ class CategoriesController extends Controller
             if($old_image && $old_image =! $category->image){
                 Storage::disk('uploads')->delete($old_image);
             }
-            return redirect()
-            ->route('dashboard.categories.index')
-             ->with('success' , "Catgory ($category->name) Updated");
+            session()->flash('alert-type', $category ? "info" : "danger"); 
+            session()->flash('message',$category ? "update Successfully" : "update falid");
+            return redirect()->back();
+            // ->route('dashboard.categories.index')
+            //  ->with('success' , "Catgory ($category->name) Updated");
         }
 
         //Delete

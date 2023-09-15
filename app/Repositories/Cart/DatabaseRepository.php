@@ -75,4 +75,14 @@ class DatabaseRepository implements CartRepository
         });
     }
 
+    public function setUserId($id)
+    {
+        $user =  Auth::user();  // or this   $user = auth()->user();     
+
+        Cart::where('cookie_id' , '=' ,$this->cookie_id)
+            ->update([
+                'user_id' => $id
+            ]);
+    }
+
 }
