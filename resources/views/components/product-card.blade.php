@@ -33,8 +33,7 @@
         @endif
         <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
         <img src="{{ $product->image_url }}" alt="">
-        <a class="ps-shoe__overlay" href="{{ $product->url }}"
-            target="_blank"></a>
+        <a class="ps-shoe__overlay" href="{{ $product->url }}"></a>
     </div>
     <div class="ps-shoe__content">
         <div class="ps-shoe__variants">

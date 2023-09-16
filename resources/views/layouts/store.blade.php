@@ -101,12 +101,12 @@
                 </div>
                 <div class="navigation__column center">
                     <ul class="main-menu menu">
-                        <li class="menu-item menu-item-has-children dropdown"><a href="index.html">Home</a>
-                            <ul class="sub-menu">
+                        <li class="menu-item menu-item-has-children dropdown"><a href="{{  route('products')  }}">Home</a>
+                            {{-- <ul class="sub-menu">
                                 <li class="menu-item"><a href="index.html">Homepage #1</a></li>
                                 <li class="menu-item"><a href="#">Homepage #2</a></li>
                                 <li class="menu-item"><a href="#">Homepage #3</a></li>
-                            </ul>
+                            </ul> --}}
                         </li>
                         <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">Men</a>
                             <div class="mega-menu">
