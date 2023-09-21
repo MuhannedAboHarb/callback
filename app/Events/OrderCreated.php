@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,14 +15,16 @@ class OrderCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $total ;
+    public $order; // تم تغيير اسم المتغير من total إلى order
 
     /**
      * Create a new event instance.
+     *  @param \App\Models\Order; 
+     * @return void
      */
-    public function __construct($total)
+    public function __construct(Order  $order)
     {
-        $this->total = $total ;
+        $this->order = $order;
     }
 
     /**

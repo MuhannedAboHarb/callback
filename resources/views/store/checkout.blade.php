@@ -10,37 +10,54 @@
                             <div class="form-group form-group--inline">
                                 <label>First Name<span>*</span>
                                 </label>
-                                <input class="form-control" type="text">
+                                {{-- <input class="form-control" type="text"> --}}
+                                <x-form.input name="shipping[first_name]" :value=" $user->profile->first_name "  />
+
                             </div>
                             <div class="form-group form-group--inline">
                                 <label>Last Name<span>*</span>
                                 </label>
-                                <input class="form-control" type="text">
+                                {{-- <input class="form-control" type="text"> --}}
+                                <x-form.input name="shipping[last_name]" :value=" $user->profile->last_name "  />
                             </div>
                             <div class="form-group form-group--inline">
-                                <label>Company Name<span>*</span>
+                                <label>{{-- CompanyName --}} Phone Number<span>*</span>
                                 </label>
-                                <input class="form-control" type="text">
+                                {{-- <input class="form-control" type="text"> --}}
+                                <x-form.input name="shipping[phone_number]"   />
+                                
                             </div>
                             <div class="form-group form-group--inline">
                                 <label>Email Address<span>*</span>
                                 </label>
-                                <input class="form-control" type="email">
+                                {{-- <input class="form-control" type="email"> --}}
+                                <x-form.input name="shipping[email]" :value=" $user->email "  />
+                                
                             </div>
                             <div class="form-group form-group--inline">
-                                <label>Company Name<span>*</span>
+                                <label>Street Address<span>*</span>
                                 </label>
-                                <input class="form-control" type="text">
+                                <x-form.input name="shipping[street]" :value=" $user->profile->address "  />
+
                             </div>
                             <div class="form-group form-group--inline">
-                                <label>Phone<span>*</span>
+                                <label>{{-- Phone --}} City<span>*</span>
                                 </label>
-                                <input class="form-control" type="text">
+                                <x-form.input name="shipping[city]" :value=" $user->profile->city "  />
+
                             </div>
                             <div class="form-group form-group--inline">
-                                <label>Address<span>*</span>
+                                <label>{{-- Address --}} Country<span>*</span>
                                 </label>
-                                <input class="form-control" type="text">
+                                <select name="shipping[country_code]" id="country_code">
+                                    <option value="">Select Country</option>
+                                    @foreach (Symfony\Component\Intl\Countries::getNames() as $code => $name)
+                                        <option value="{{ $code }}"
+                                            @if (old('shipping.country_code', $user->profile->country_code) == $code) selected @endif>{{ $name }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
                             </div>
                             <div class="form-group">
                                 <div class="ps-checkbox">
@@ -69,16 +86,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($cart->all() as $item )
-                                            
-                                        <tr>
-                                            <td>{{ $item->product->name }} x {{ $item->quantity }}</td>
-                                            <td>{{ Money::format($item->quantity * $item->product->price) }}</td>
-                                        </tr>
-                                    @endforeach
+                                        @foreach ($cart->all() as $item)
+                                            <tr>
+                                                <td>{{ $item->product->name }} x {{ $item->quantity }}</td>
+                                                <td>{{ Money::format($item->quantity * $item->product->price) }}</td>
+                                            </tr>
+                                        @endforeach
                                         <tr>
                                             <td>Order Total</td>
-                                            <td>{{  Money::format($cart->total()) }}</td>
+                                            <td>{{ Money::format($cart->total()) }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

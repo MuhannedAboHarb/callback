@@ -21,17 +21,17 @@ class UpdateCartUserId
 
     /**
      * Handle the event.
-     * @param \Illuminate\Auth\Events\Login  $event
+     * @param \Illuminate\Auth\Events\Login;  $event
      * @return void
      */
     public function handle(Login $event): void
     {
         $id = $event->user->id;
-        
+
         $cart = App::make(CartRepository::class);
         if(method_exists($cart , 'setUserId')){
             $cart->setUserId($id);
-         }
-         Cookie::queue('cart_id' , '' , -24 *60 *30);
+        }
+        Cookie::queue('cart_id' , '' , -24 *60 *30);
     }
 }

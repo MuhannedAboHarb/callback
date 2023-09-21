@@ -20,6 +20,7 @@ class DatabaseRepository implements CartRepository
     // بترجع جميع العناصر داخل السلة
     public function all ()
     {
+        $id = Auth::id();
         $this->items = Cart::with('product')
         ->where('cookie_id' , '=' ,$this->cookie_id)    //تبديل
         ->orWhere('user_id' , '=' , Auth::id())
@@ -54,23 +55,30 @@ class DatabaseRepository implements CartRepository
     
     public function remove ($id)
     {
-        Cart::where([
-            'id' => $id ,
-            'cookie_id' => $this->cookie_id,   //تبديل
-        ])->delete();
+       $id = Auth::id();
+       Cart::when($id , function($query,$id){
+        $query->orWhere('user_id' , $id);
+       })
+       ->where([
+        'id' => $id,
+        'cookie_id' => $this->cookie_id,
+       ])
+       ->delete();
     }
 
     // حذف كل عناصر السلة
     public function empty ()
     {
-        Cart::where([
-            'cookie_id' => $this->cookie_id,   //تبديل
-        ])->delete(); 
+        $id = Auth::id();
+        Cart::where('cookie_id' , '=' , $this->cookie_id )
+        ->when($id , function($query,$id){
+            $query->orWhere('user_id',$id);
+        })->delete();
     }
     //مجموع السلة
     public function total()
     {
-        return $this->items->sum(function ($item) {
+        return $this->all()->sum(function ($item) {
             return $item->product->price * $item->quantity;
         });
     }
