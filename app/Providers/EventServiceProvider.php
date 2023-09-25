@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\OrderCreated;
 use App\Listeners\DeleteCartCookieId;
 use App\Listeners\SendOrderCreatedEmailToAdmin;
+use App\Listeners\SendOrderCreatedNotification;
 use App\Listeners\UpdateCartUserId;
 use App\Listeners\UpdateUserLastLoginAt;
 use Illuminate\Auth\Events\Login;
@@ -36,7 +37,8 @@ class EventServiceProvider extends ServiceProvider
         //     SendOrderCreatedEmailToAdmin::class ,
         // ],
         OrderCreated::class =>[
-            SendOrderCreatedEmailToAdmin::class
+            SendOrderCreatedNotification::class,
+            // SendOrderCreatedEmailToAdmin::class
         ],
     ];
 

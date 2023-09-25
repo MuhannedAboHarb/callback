@@ -9,8 +9,8 @@ class HomeController extends Controller
 {
     //
     public function index(){
-        $newproducts = Product::latest()->limit(8)->get();
-        $topSales = Product::inRandomOrder()->limit(10)->get();
+        $newproducts = Product::latest()->limit(12)->get();
+        $topSales = Product::inRandomOrder()->limit(12)->get();
 
         return view('store.home',[
             'newproducts' => $newproducts ,

@@ -52,7 +52,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
-                        <p>460 West 34th Street, 15th floor, New York - Hotline: 804-377-3580 - 804-399-3580</p>
+                        {{-- <p>460 West 34th Street, 15th floor, New York - Hotline: 804-377-3580 - 804-399-3580</p> --}}
+                        <nav>
+                            <img src="{{ asset('assets/store/images/ph.png') }}" width="45" height="45">
+                        </nav>
                     </div>
                     <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
                         <div class="header__actions">

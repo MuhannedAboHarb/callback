@@ -17,16 +17,28 @@ class DatabaseRepository implements CartRepository
         $this->cookie_id = $cookie_id ;
      }
 
-    // بترجع جميع العناصر داخل السلة
-    public function all ()
-    {
-        $id = Auth::id();
-        $this->items = Cart::with('product')
-        ->where('cookie_id' , '=' ,$this->cookie_id)    //تبديل
-        ->orWhere('user_id' , '=' , Auth::id())
-        ->get();
+     /**
+      * @return \Illuminate\Database\Eloquent\Builder;
+      */
+     protected function query()
+     {
+         $id = Auth::id();
+         $query = Cart::with('product');
+         if ($id) {
+             $query->where('user_id', '=', $id);
+         } else {
+             $query->where('cookie_id', '=', $this->cookie_id);
+         }
+         return $query;
+     }
 
-        return $this->items ;
+    // بترجع جميع العناصر داخل السلة
+    public function all()
+    {
+        if ($this->items === null) {
+            $this->items = $this->query()->get();
+        }
+        return $this->items;
     }
 
     public function add ($item , $qty = 1)
@@ -53,27 +65,15 @@ class DatabaseRepository implements CartRepository
         }         
     }
     
-    public function remove ($id)
+    public function remove($id)
     {
-       $id = Auth::id();
-       Cart::when($id , function($query,$id){
-        $query->orWhere('user_id' , $id);
-       })
-       ->where([
-        'id' => $id,
-        'cookie_id' => $this->cookie_id,
-       ])
-       ->delete();
+        $this->query()->where('id', '=', $id)->delete();
     }
 
     // حذف كل عناصر السلة
-    public function empty ()
+    public function empty()
     {
-        $id = Auth::id();
-        Cart::where('cookie_id' , '=' , $this->cookie_id )
-        ->when($id , function($query,$id){
-            $query->orWhere('user_id',$id);
-        })->delete();
+        $this->query()->delete();
     }
     //مجموع السلة
     public function total()
@@ -88,6 +88,7 @@ class DatabaseRepository implements CartRepository
         $user =  Auth::user();  // or this   $user = auth()->user();     
 
         Cart::where('cookie_id' , '=' ,$this->cookie_id)
+            ->whereNull('user_id') // user_id IS NULL
             ->update([
                 'user_id' => $id
             ]);
