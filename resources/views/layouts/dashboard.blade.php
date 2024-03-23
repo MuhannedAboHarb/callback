@@ -103,7 +103,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         John Pierce
                                         <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
                                     </h3>
-                                        <p class="text-sm">I got your message bro</p>
+                                    <p class="text-sm">I got your message bro</p>
                                     <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                 </div>
                             </div>
@@ -168,16 +168,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             alt="User Image">
                     </div>
                     <div class="info">
-                       @if(Auth::check())
+                        @if (Auth::check())
                             <a href="{{ route('profile') }}" class="d-block">{{ Auth::user()->name }}</a> |
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout').submit()">Logout</a>
-                            <form id="logout" action="{{ route('logout') }}" method="post" style="display: none">
+                            <form id="logout" action="{{ route('logout') }}" method="post"
+                                style="display: none">
                                 @csrf
                             </form>
-                         @else
-                         <a href="{{ route('login') }}">Login</a>   
-                       @endif
+                        @else
+                            <a href="{{ route('login') }}">Login</a>
+                        @endif
                     </div>
                 </div>
 
@@ -210,9 +211,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                            @foreach (config('nav') as $item)
+                                    @foreach (config('nav') as $item)
                                 <li class="nav-item">
-                                    <a href="{{ $item['route'] }}" class="nav-link @if(Route::is($item['route.active'])) active @endif" >
+                                    <a href="{{ $item['route'] }}"
+                                        class="nav-link @if (Route::is($item['route.active'])) active @endif">
                                         <i class="{{ $item['icon'] }}"></i>
                                         <p>
                                             {{ $item['title'] }}
@@ -225,7 +227,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         </p>
                                     </a>
                                 </li>
-                            @endforeach
+                                @endforeach
 
                         </li>
 
@@ -300,9 +302,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   
-   
+    <script>
+        const userId = "{{ Auth::id() }}";
+    </script>
+    <script src="{{ asset('js/notifications.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+@vite('resources/js/app.js')
     @yield('scripts')
 
 
