@@ -30,7 +30,7 @@ class OrderCreatedNotification extends Notification
      */
     public function via(object $notifiable): array  //اهم دالة
     {
-        return ['mail', 'database', 'broadcast'];
+        return ['broadcast', 'mail', 'database' ];
     }
 
     /**
@@ -54,7 +54,7 @@ class OrderCreatedNotification extends Notification
     /**
      * Get the database representation of the notification.
      */
-    public function toDatabase(object $notifiable)
+    public function toDatabase(object $notifiable): DatabaseMessage
     {
         $order = $this->order;
         $billing = $order->addresses()->where('type', '=', 'billing')->first();
@@ -74,7 +74,7 @@ class OrderCreatedNotification extends Notification
     /**
      * Get the broadcast representation of the notification.
      */
-    public function toBroadcast($notifiable)
+    public function toBroadcast($notifiable): BroadcastMessage 
     {
         $order = $this->order;
         $billing = $order->addresses()->where('type', '=', 'billing')->first();

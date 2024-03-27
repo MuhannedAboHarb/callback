@@ -302,17 +302,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 
+
+    {{-- <script>
+        $('#notification-toast').toast('show')
+        alert();
+    </script> --}}
     <script>
-        const userId = "{{ Auth::id() }}";
+        const userID = {{ Auth::id() }};
     </script>
-    <script src="{{ asset('js/notifications.js') }}"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-@vite('resources/js/app.js')
-    @yield('scripts')
-
+    @vite(['resources/js/app.js'])
+    @stack('scripts')
 
 </body>
 
