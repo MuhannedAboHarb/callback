@@ -2,8 +2,8 @@
 @section('title', 'Create Category')
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item ">Categories</li>
-    <li class="breadcrumb-item active">Create</li>
+    <li class="breadcrumb-item ">{{ __('Categories') }}</li>
+    <li class="breadcrumb-item active">{{ __('Create') }}</li>
 @endsection
 
 @section('content')
