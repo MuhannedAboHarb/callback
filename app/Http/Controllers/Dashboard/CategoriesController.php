@@ -92,7 +92,7 @@ class CategoriesController extends Controller
             $category=Category::create($data);
             
         session()->flash('alert-type', $category ? "success" : "danger"); 
-         session()->flash('message',$category ? "Create Successfully" : "Create falid");
+         session()->flash('message',$category ? __("Create Successfully") : "Create falid");
          return redirect() ->back();
         //  ->route('dashboard.categories.index') ;
         //  ->with('success' , "Catgory ($category->name) Created");
@@ -132,7 +132,7 @@ class CategoriesController extends Controller
                 Storage::disk('uploads')->delete($old_image);
             }
             session()->flash('alert-type', $category ? "info" : "danger"); 
-            session()->flash('message',$category ? "update Successfully" : "update falid");
+            session()->flash('message',$category ? __("update Successfully") : "update falid");
             return redirect()->back();
             // ->route('dashboard.categories.index')
             //  ->with('success' , "Catgory ($category->name) Updated");

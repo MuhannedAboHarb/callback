@@ -1,12 +1,12 @@
 @extends('layouts.dashboard')
 
-@section('title' , 'Profile Update')
+@section('title' , __('Profile Update'))
 
 @section('content')
     
 
     <p>
-        <a href="{{ route('change-password') }}">Change Password</a>
+        <a href="{{ route('change-password') }}">{{ __('Change Password') }}</a>
     </p>
 
     <x-flash-message />

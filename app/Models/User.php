@@ -43,35 +43,32 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    
+
     public function profile()
     {
-        return $this->hasOne(Profile::class , 'user_id' , 'id')
-                    ->withDefault();
+        return $this->hasOne(Profile::class, 'user_id', 'id')
+            ->withDefault();
     }
-    
+
     public function cartProducts()
     {
-        return  $this->belongsToMany(
-            Product::class , 
-            'carts' ,
-            'user_id' ,
-            'product_id' ,
-            'id' ,
-            'id' ,
+        return $this->belongsToMany(
+            Product::class,
+            'carts',
+            'user_id',
+            'product_id',
+            'id',
+            'id',
         );
     }
 
-
     public function cart()
     {
-        return $this->hasMany(Cart::class, 'user_id' , 'id');
+        return $this->hasMany(Cart::class, 'user_id', 'id');
     }
-    
 
     public function receivesBroadcastNotificationsOn()
     {
-        return 'Notifications.' . $this->id;
+        return 'notification.'.$this->id;
     }
-
 }
