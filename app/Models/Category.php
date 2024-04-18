@@ -14,6 +14,11 @@ class Category extends Model
     use HasFactory;
     use SoftDeletes;
 
+
+    protected $hidden = ['created_at' , 'deleted_at' , 'image'];
+    
+    protected $appends = ['image_url'];
+
     protected $fillable=
     [
      'name' ,'slug','parent_id','description','image'
