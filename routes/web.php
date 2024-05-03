@@ -9,7 +9,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\NotificationsController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductsController as ControllersProductsController;
+use App\Http\Controllers\ProductsController as StoreProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,12 +32,17 @@ Route::get('/',[HomeController::class,'index'])
         ->name('home');
 
 
-Route::get('/products/{category:slug?}',[ControllersProductsController::class,'index'])
+Route::get('/products/{category:slug?}',[StoreProductsController::class,'index'])
         ->name('products'); 
 
 
-Route::get('/products/{category:slug?}/{product:slug}',[ControllersProductsController::class,'show'])
+Route::get('/products/{category:slug?}/{product:slug}',[StoreProductsController::class,'show'])
         ->name('products.show');         
+
+
+ Route::post('/products/{product}/reviews', [StoreProductsController::class, 'review'])
+        ->name('products.reviews.store');  
+
 
 Route::get('/cart',[CartController::class , 'index'])
         ->name('cart');
