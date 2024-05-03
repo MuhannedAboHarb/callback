@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -38,5 +39,30 @@ class ProductsController extends Controller
     //     return view('store.products.show',compact('category','product'));
     // }
 
+    public function review(Request $request, Product $product)
+    {
+        $request->validate([
+            'rating' => ['required', 'int', 'min:1', 'max:5'],
+            'review' => ['nullable', 'string'],
+        ]);
+        $review = $product->reviews()->create([
+            'user_id' => Auth::id(),
+            'rating' => $request->post('rating'),
+            'review' => $request->post('review'),
+        ]);
+
+        $result = $product->reviews()
+            ->selectRaw('AVG(rating) as avg_rating')
+            ->selectRaw('COUNT(*) as total_reviews')
+            ->first();
+
+        $product->forceFill([
+            'rating' => $result->avg_rating,
+            'total_reviews' => $result->total_reviews,
+        ])->save();
+
+        return redirect()->to($product->url)
+            ->with('success', __('Product reviewd'));
+    }
 
 }

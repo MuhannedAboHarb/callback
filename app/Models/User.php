@@ -33,7 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
         'updated_at',
-        'created_at'
+        'created_at',
     ];
 
     /**
@@ -62,6 +62,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'id',
             'id',
         );
+    }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+
+    public function writtenReviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     public function cart()
