@@ -19,7 +19,9 @@
         </div>
 
         <div>
-            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success">{{ __('Create') }}</a>
+            @can('categories.create')
+                <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success">{{ __('Create') }}</a>
+            @endcan
             <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-primary">{{ __('Trash') }}</a>
         </div>
     </div>
@@ -49,15 +51,19 @@
                         <td>{{ $category->description }}</td>
                         <td>{{ $category->created_at }}</td>
                         <td>
-                            <a href="{{ route('dashboard.categories.edit', [$category->id]) }}"
-                                class="btn btn-sm btn-outline-success">{{ __('Edit') }}</a>
+                            @can('categories.update')
+                                <a href="{{ route('dashboard.categories.edit', [$category->id]) }}"
+                                    class="btn btn-sm btn-outline-success">{{ __('Edit') }}</a>
+                            @endcan
                         </td>
                         <td>
-                            <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">{{ __('Delete') }}</button>
-                            </form>
+                            @can('categories.delet')
+                                <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">{{ __('Delete') }}</button>
+                                </form>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

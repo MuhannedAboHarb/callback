@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -16,9 +17,19 @@ use Illuminate\Validation\ValidationException;
 class CategoriesController extends Controller
 {
     //
+
+        // public function __construct()
+        // {
+        //     $this->middleware('can:categories.view')->only('index');    
+        // }
+
+
         //Read
         public function index()
     {
+        if(!Gate::allows('categories.view')){
+            abort(403,'You are not access this page' ); //Foribden
+        }
         $categories=Category::leftJoin('categories as parents','parents.id' , '=' , 'categories.parent_id')
         ->select([
             'categories.*',
@@ -41,6 +52,11 @@ class CategoriesController extends Controller
         //Create
         public function create()
         {
+
+            if(!Gate::allows('categories.create')){
+                abort(403,'You are not access this page'); //Foribden
+            }
+
             $categories = Category::orderBy('name')->get();
               return view('dashboard.categories.create',[
                 'parents'=>$categories,
@@ -76,6 +92,11 @@ class CategoriesController extends Controller
 
         public function store(Request $request)
         {
+
+            if(Gate::denies('categories.create')){
+                abort(403,'You are not access this page'); //Foribden
+            }
+
             $rules=$this->role(null);
             $request->validate($rules);
 
@@ -101,6 +122,10 @@ class CategoriesController extends Controller
         //Update two function
         public function edit ($id)
         {
+            if(!Gate::allows('categories.update')){
+                abort(403,'You are not access this page'); //Foribden
+            }
+
             $category=Category::withTrashed()->findOrFail($id);
             if($category==null)
             {
@@ -114,6 +139,11 @@ class CategoriesController extends Controller
 
         public function update (Request $request,$id)
         {
+
+            if(!Gate::allows('categories.update')){
+                abort(403,'You are not access this page'); //Foribden
+            }
+
             $rules=$this->role(null);
             $request->validate($rules);
 
@@ -141,6 +171,11 @@ class CategoriesController extends Controller
         //Delete
         public function destroy ($id)
         {
+
+            if(!Gate::check('categories.delet')){
+                abort(403,'You are not access this page');
+            }
+
             $category=Category::withTrashed()->findOrFail($id);
             if( $category->trashed()){
                 $category->forceDelete();

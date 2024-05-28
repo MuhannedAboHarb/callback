@@ -8,6 +8,8 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\NotificationsController;
 use App\Http\Controllers\Dashboard\ProductsController;
+use App\Http\Controllers\Dashboard\RolesController;
+use App\Http\Controllers\Dashboard\UsersController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController as StoreProductsController;
 use Illuminate\Support\Facades\Route;
@@ -80,8 +82,12 @@ Route::group([
                 ->name('products.trash');
 
         Route::patch('/products/{product}/restore',[ProductsController::class,'restore'])
-                ->name('products.restore');        
+                ->name('products.restore');
                 
+
+        Route::resource('roles',RolesController::class);
+        Route::resource('users',UsersController::class);
+
                 //All Route Products
                 Route::resource('/products',ProductsController::class);  
 
