@@ -67,7 +67,8 @@ Route::group([
     'prefix'=>'/dashboard',
     'as'=>'dashboard.',
 //     'namespace'=>'Dashboard'
-     'middleware'=>['auth']   
+     'middleware'=>['auth:admin']  
+      
 ] , function() {
        Route::get('/',[DashboardController::class,'index']);  
 
@@ -172,4 +173,4 @@ Route::get('/dashboard/breeze', function () {
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';
