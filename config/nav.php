@@ -17,7 +17,38 @@ return [
         ],
     ],
 
+    'products' => [
+        'title'=> ' Product',
+        'route.active'=> 'dashboard.products.*',
+        'icon'=> 'fa fa-podcast',
+        'route'=>'/dashboard/products',
+        'badge'=>[
+            'class'=> 'info',
+            'label'=>'main'
+        ],
+    ],
 
+    'roles' => [
+        'route.active'=> 'dashboard.roles.*',
+        'title'=> 'Roles',
+        'icon'=> 'fa fa-podcast',
+        'route'=>'/dashboard/roles',
+        'badge'=>[
+            'class'=> 'danger',
+            'label'=>'New'
+        ],
+    ],
+
+    'users' => [
+        'route.active'=> 'dashboard.users.*',
+        'title'=> 'Users',
+        'icon'=> 'fa fa-podcast',
+        'route'=>'/dashboard/users',
+        'badge'=>[
+            'class'=> 'success',
+            'label'=>'New'
+        ],
+    ],
 
 
     'orders' => [
@@ -39,21 +70,5 @@ return [
         'route.active' => 'change-password.',
         'icon'=> 'fa fa-key',
         'route'=>'/change-password',
-    ],
-
-
-
-
-
-
-    'products' => [
-        'title'=> ' Product',
-        'route.active'=> 'dashboard.products.*',
-        'icon'=> 'fa fa-podcast',
-        'route'=>'/dashboard/products',
-        'badge'=>[
-            'class'=> 'info',
-            'label'=>'main'
-        ],
     ],
 ];

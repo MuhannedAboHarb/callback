@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,12 +20,13 @@ class ProductsController extends Controller
 
      public function __construct()
      {
-        $this->middleware(['verified'])->except(['index' , 'show']);
+        // $this->middleware(['verified'])->except(['index' , 'show']);
      }
 
 
     public function index()
     {
+        Gate::authorize('products.view');
         //
         $products=Product::all();
         return view('dashboard.products.index', [
@@ -37,7 +39,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('products.create');
         return view('dashboard.products.create', [
             'product'=> new Product(),
                         'availabillties' => Product::availabillties(), 
@@ -50,6 +52,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('products.create');
         //
         $role = $this->role(null);
         
@@ -92,6 +95,7 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
+        Gate::authorize('products.update');
         //
         $product=Product::findOrFail($id);
         return view('dashboard.products.edit',[
@@ -106,6 +110,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
 {
+    Gate::authorize('products.update');
     $product = Product::findOrFail($id);
     $role = $this->role($product->id); // قم بتمرير معرف المنتج هنا
     $request->validate($role);
@@ -138,6 +143,7 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize('products.delet');
         //
         $product=Product::withTrashed()->findOrFail($id);
 

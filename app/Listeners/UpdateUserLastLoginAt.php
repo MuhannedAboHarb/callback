@@ -29,8 +29,13 @@ class UpdateUserLastLoginAt
     {
         $user = $event->user ;
 
-        $user->forceFill([
-            'last_login_at' => Carbon::now()
-        ])->save();
+        try{
+            $user->forceFill([
+                'last_login_at' => Carbon::now()
+            ])->save();
+        } catch (Throwable $e) {
+
+            
+        }
     }
 }

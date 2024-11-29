@@ -53,7 +53,7 @@ class CheckoutController extends Controller
         // event('order.created', [$cart, Auth::user()]);
         event( new OrderCreated($order) );
 
-        return redirect()->route('home', $order->id);
+        return redirect()->route('payments.create', $order->id);
     }
 
     protected function storeOrder(Request $request, CartRepository $cart)

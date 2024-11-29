@@ -8,7 +8,10 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\NotificationsController;
 use App\Http\Controllers\Dashboard\ProductsController;
+use App\Http\Controllers\Dashboard\RolesController;
+use App\Http\Controllers\Dashboard\UsersController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProductsController as StoreProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,13 +62,25 @@ Route::get('/checkout',[CheckoutController::class , 'index'])
 Route::post('checkout' , [CheckoutController::class , 'store']);
 
 
+Route::get('orders/{order}/payments/create', [PaymentsController::class, 'create'])
+    ->name('payments.create');
+
+Route::get('orders/{order}/payments/refund', [PaymentsController::class, 'refund'])
+    ->name('payments.refund');
+
+Route::get('orders/{order}/payments/return', [PaymentsController::class, 'callback'])
+    ->name('payments.callback');
+    
+Route::get('orders/{order}/payments/cancel', [PaymentsController::class, 'cancel'])
+    ->name('payments.cancel');
 
 
 Route::group([
     'prefix'=>'/dashboard',
     'as'=>'dashboard.',
 //     'namespace'=>'Dashboard'
-     'middleware'=>['auth']   
+//      'middleware'=>['auth:admin']  
+      
 ] , function() {
        Route::get('/',[DashboardController::class,'index']);  
 
@@ -80,8 +95,12 @@ Route::group([
                 ->name('products.trash');
 
         Route::patch('/products/{product}/restore',[ProductsController::class,'restore'])
-                ->name('products.restore');        
+                ->name('products.restore');
                 
+
+        Route::resource('roles',RolesController::class);
+        Route::resource('users',UsersController::class);
+
                 //All Route Products
                 Route::resource('/products',ProductsController::class);  
 
