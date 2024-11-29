@@ -19,9 +19,9 @@
         </div>
 
         <div>
-            {{-- @can('categories.create') --}}
+            @can('categories.create')
                 <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success">{{ __('Create') }}</a>
-            {{-- @endcan --}}
+            @endcan
             <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-primary">{{ __('Trash') }}</a>
         </div>
     </div>
@@ -51,19 +51,19 @@
                         <td>{{ $category->description }}</td>
                         <td>{{ $category->created_at }}</td>
                         <td>
-                            {{-- @can('categories.update') --}}
+                            @can('categories.update')
                                 <a href="{{ route('dashboard.categories.edit', [$category->id]) }}"
                                     class="btn btn-sm btn-outline-success">{{ __('Edit') }}</a>
-                            {{-- @endcan --}}
+                            @endcan
                         </td>
                         <td>
-                            {{-- @can('categories.delet') --}}
+                            @can('categories.delet')
                                 <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-sm btn-outline-danger">{{ __('Delete') }}</button>
                                 </form>
-                            {{-- @endcan --}}
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

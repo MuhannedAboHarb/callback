@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\RolesController;
 use App\Http\Controllers\Dashboard\UsersController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProductsController as StoreProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,13 +62,24 @@ Route::get('/checkout',[CheckoutController::class , 'index'])
 Route::post('checkout' , [CheckoutController::class , 'store']);
 
 
+Route::get('orders/{order}/payments/create', [PaymentsController::class, 'create'])
+    ->name('payments.create');
+
+Route::get('orders/{order}/payments/refund', [PaymentsController::class, 'refund'])
+    ->name('payments.refund');
+
+Route::get('orders/{order}/payments/return', [PaymentsController::class, 'callback'])
+    ->name('payments.callback');
+    
+Route::get('orders/{order}/payments/cancel', [PaymentsController::class, 'cancel'])
+    ->name('payments.cancel');
 
 
 Route::group([
     'prefix'=>'/dashboard',
     'as'=>'dashboard.',
 //     'namespace'=>'Dashboard'
-     'middleware'=>['auth:admin']  
+//      'middleware'=>['auth:admin']  
       
 ] , function() {
        Route::get('/',[DashboardController::class,'index']);  
@@ -173,4 +185,4 @@ Route::get('/dashboard/breeze', function () {
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-// require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';

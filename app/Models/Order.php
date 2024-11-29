@@ -16,6 +16,10 @@ class Order extends Model
         'ip' , 'user_agent' 
     ];
 
+    protected $casts = [
+        'payment_data' => 'json',
+    ];
+
     protected static function booted() //بضيف فيها قلوبل سكوب وبالاضافة لليفنت
     {
         static::creating(function(Order $order){

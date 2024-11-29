@@ -27,12 +27,12 @@
     <x-flash-message name="success" />
 
     <div class="table-toobar row mb-3 d-flex justify-content-between">
-        {{-- @can('products.create') --}}
+        @can('products.create')
             <div>
                 <a href="{{ route('dashboard.products.create') }}" class="btn btn-success">Create</a>
                 <a href="{{ route('dashboard.products.trash') }}" class="btn btn-primary">Trash</a>
             </div>
-        {{-- @endcan --}}
+        @endcan
     </div>
 
     <div class="table-responsive">
@@ -76,19 +76,19 @@
                         <td>{{ $product->status }}</td>
                         <td>{{ $product->created_at }}</td>
                         <td>
-                            {{-- @can('products.update') --}}
+                            @can('products.update')
                                 <a href="{{ route('dashboard.products.edit', [$product->id]) }}"
                                     class="btn btn-sm btn-outline-success">Edit</a>
-                            {{-- @endcan --}}
+                            @endcan
                         </td>
                         <td>
-                            {{-- @can('products.delet') --}}
+                            @can('products.delet')
                                 <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                                 </form>
-                            {{-- @endcan --}}
+                            @endcan
                         </td>
                     </tr>
                 @endforeach
