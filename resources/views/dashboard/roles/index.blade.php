@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    @can('roles.view')
+    @can('roles.views')
         <x-flash-message name="success" />
 
         <div class="table-toobar row mb-3 d-flex justify-content-between">
