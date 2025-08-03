@@ -27,9 +27,9 @@ class CategoriesController extends Controller
     //Read
     public function index()
     {
-        // if(!Gate::allows('categories.view')){
-        //     abort(403,'You are not access this page' ); //Foribden
-        // }
+        if(!Gate::allows('categories.view')){
+            abort(403,'You are not access this page' ); //Foribden
+        }
         $categories = Category::leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
             ->select([
                 'categories.*',
@@ -53,9 +53,9 @@ class CategoriesController extends Controller
     public function create()
     {
 
-        // if(!Gate::allows('categories.create')){
-        //     abort(403,'You are not access this page'); //Foribden
-        // }
+        if(!Gate::allows('categories.create')){
+            abort(403,'You are not access this page'); //Foribden
+        }
 
         $categories = Category::orderBy('name')->get();
         return view('dashboard.categories.create', [
@@ -91,39 +91,37 @@ class CategoriesController extends Controller
 
 
     public function store(Request $request)
-    {
-
-        // if(Gate::denies('categories.create')){
-        //     abort(403,'You are not access this page'); //Foribden
-        // }
-
-        $rules = $this->role(null);
-        $request->validate($rules);
-
-        $data = $request->except('image');
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $data['image'] = $this->upload($file);
-        }
-
-        // $data['slug']=Str::slug($data['name']);
-
-        $category = Category::create($data);
-
-        session()->flash('alert-type', $category ? "success" : "danger");
-        session()->flash('message', $category ? __("Create Successfully") : "Create falid");
-        return redirect()->back();
-        //  ->route('dashboard.categories.index') ;
-        //  ->with('success' , "Catgory ($category->name) Created");
+{
+    if (Gate::denies('categories.create')) {
+        abort(403, 'You are not authorized to access this page');
     }
+
+    $rules = $this->role(null);
+    $request->validate($rules);
+
+    $data = $request->except('image');
+    
+    // إنشاء الفئة أولاً بدون الصورة
+    $category = Category::create($data);
+
+    // رفع الصورة باستخدام Spatie إذا وجدت
+    if ($request->hasFile('image')) {
+        $category->addMediaFromRequest('image')
+                ->toMediaCollection('images'); // يجب أن يتطابق مع collection المحدد في المودل
+    }
+
+    session()->flash('alert-type', $category ? "success" : "danger");
+    session()->flash('message', $category ? __("Category Created Successfully") : "Category creation failed");
+    
+    return redirect()->back();
+}
 
     //Update two function
     public function edit($id)
     {
-        // if(!Gate::allows('categories.update')){
-        //     abort(403,'You are not access this page'); //Foribden
-        // }
+        if(!Gate::allows('categories.update')){
+            abort(403,'You are not access this page'); //Foribden
+        }
 
         $category = Category::withTrashed()->findOrFail($id);
         if ($category == null) {
@@ -138,9 +136,9 @@ class CategoriesController extends Controller
     public function update(Request $request, $id)
     {
 
-        // if(!Gate::allows('categories.update')){
-        //     abort(403,'You are not access this page'); //Foribden
-        // }
+        if(!Gate::allows('categories.update')){
+            abort(403,'You are not access this page'); //Foribden
+        }
 
         $rules = $this->role($id);
         $request->validate($rules);
@@ -169,9 +167,9 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
 
-        // if(!Gate::check('categories.delet')){
-        //     abort(403,'You are not access this page');
-        // }
+        if(!Gate::check('categories.delet')){
+            abort(403,'You are not access this page');
+        }
 
         $category = Category::withTrashed()->findOrFail($id);
         if ($category->trashed()) {
