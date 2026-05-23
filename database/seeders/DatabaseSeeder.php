@@ -22,13 +22,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // $this->call(CategoriesTableSeeder::class);
+        $this->call(CategoriesTableSeeder::class);
 
-        // Category::factory(2)->create();
+        Category::factory(6)->create();
 
-        // \App\Models\Admin::factory(2)->create();
-
-        // Category::factory(6)->create();
         Product::factory(50)->create();
     }
 }
