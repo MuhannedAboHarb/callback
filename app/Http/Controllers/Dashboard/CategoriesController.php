@@ -100,17 +100,16 @@ class CategoriesController extends Controller
             $rules=$this->role(null);
             $request->validate($rules);
 
-            $data=$request->except('image');
-
-            if($request->hasFile('image'))
-            {
-                $file = $request->file('image');
-                $data['image']= $this->upload($file);
-            }
-
-            // $data['slug']=Str::slug($data['name']);
+            $data=$request->except('image', 'images');
 
             $category=Category::create($data);
+
+            if($request->hasFile('images'))
+            {
+                foreach ($request->file('images') as $image) {
+                    $category->addMedia($image)->toMediaCollection('category-images');
+                }
+            }
             
         session()->flash('alert-type', $category ? "success" : "danger"); 
          session()->flash('message',$category ? __("Create Successfully") : "Create falid");
@@ -148,18 +147,25 @@ class CategoriesController extends Controller
             $request->validate($rules);
 
             $category=Category::withTrashed()->findOrFail($id);
-            $data = $request->except('image');
-            // $data['slug']= Str::slug($data['name']);
+            $data = $request->except('image', 'images', 'delete_media');
 
-            $old_image =$category->image;
-            if($request->hasFile('image'))
-            {
-                $file = $request->file('image');
-                $data['image']= $this->upload($file);
-            }
             $category->update($data);
-            if($old_image && $old_image =! $category->image){
-                Storage::disk('uploads')->delete($old_image);
+
+            if($request->hasFile('images'))
+            {
+                foreach ($request->file('images') as $image) {
+                    $category->addMedia($image)->toMediaCollection('category-images');
+                }
+            }
+
+            if($request->filled('delete_media'))
+            {
+                foreach ($request->input('delete_media') as $mediaId) {
+                    $media = $category->media()->find($mediaId);
+                    if ($media) {
+                        $media->delete();
+                    }
+                }
             }
             session()->flash('alert-type', $category ? "info" : "danger"); 
             session()->flash('message',$category ? __("update Successfully") : "update falid");
@@ -204,7 +210,10 @@ class CategoriesController extends Controller
                 ] ,
                 'parent_id'=>'nullable|int|exists:categories,id',
                 'description'=>'nullable|string|min:5',
-                'image'=>'nullable|image',
+                'images' => 'nullable|array',
+                'images.*' => 'nullable|image|max:5120',
+                'delete_media' => 'nullable|array',
+                'delete_media.*' => 'nullable|integer',
             ];
         }
 

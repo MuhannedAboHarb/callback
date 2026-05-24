@@ -61,17 +61,16 @@ class ProductsController extends Controller
 
         // image
 
-        $data = $request->except('image');
-        // $data['slug']= Str::slug($data['name']);
-
-        if($request->hasFile('image'))
-        {
-            $data['image'] = $this->upload($request->file('image'));
-        }
-
-
+        $data = $request->except('image', 'images');
 
         $product=Product::create($data);
+
+        if($request->hasFile('images'))
+        {
+            foreach ($request->file('images') as $image) {
+                $product->addMedia($image)->toMediaCollection('product-images');
+            }
+        }
 
         return redirect()
             ->route('dashboard.products.index')
@@ -117,20 +116,25 @@ class ProductsController extends Controller
 
     //IMAGE
 
-    $data = $request->except('image');
-    // $data['slug']= Str::slug($data['name']);
+    $data = $request->except('image', 'images', 'delete_media');
 
-    if($request->hasFile('image'))
-    {
-        $data['image'] = $this->upload($request->file('image'));
-    }
-
-    $old_image = $product->image ;
     $product->update($data);
 
-    if($old_image && $old_image != $product->image)
+    if($request->hasFile('images'))
     {
-        Storage::disk('uploads')->delete($old_image);
+        foreach ($request->file('images') as $image) {
+            $product->addMedia($image)->toMediaCollection('product-images');
+        }
+    }
+
+    if($request->filled('delete_media'))
+    {
+        foreach ($request->input('delete_media') as $mediaId) {
+            $media = $product->media()->find($mediaId);
+            if ($media) {
+                $media->delete();
+            }
+        }
     }
 
     return redirect()
@@ -198,7 +202,10 @@ class ProductsController extends Controller
         'quantity' => 'nullable|int|min:0',
         'sku' => 'nullable|string|unique:products,sku,' . $productId,
         'barcode' => 'nullable|string|unique:products,barcode',
-        'image' => 'nullable|image',
+        'images' => 'nullable|array',
+        'images.*' => 'nullable|image|max:5120',
+        'delete_media' => 'nullable|array',
+        'delete_media.*' => 'nullable|integer',
     ];
 }
 

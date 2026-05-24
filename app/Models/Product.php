@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
     use HasFactory;
-    use SoftDeletes ;
+    use SoftDeletes;
+    use InteractsWithMedia;
 
     protected $fillable = [
         'name' , 'slug' , 'description' , 'category_id' , 'price' , 'compare_price' , 'cost',
@@ -63,18 +66,33 @@ class Product extends Model
     }
 
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('product-images');
+    }
+
     public function getImageUrlAttribute()
-{
-    if (! $this->image) {
-        return asset('images/defluat.jpg');
+    {
+        $media = $this->getFirstMedia('product-images');
+        if ($media) {
+            return $media->getUrl();
+        }
+
+        if (! $this->image) {
+            return asset('images/defluat.jpg');
+        }
+
+        if (Str::startsWith($this->image, ['http://', 'https://'])) {
+            return $this->image;
+        }
+
+        return asset('uploads/' . $this->image);
     }
 
-    if (Str::startsWith($this->image, ['http://', 'https://'])) {
-        return $this->image;
+    public function getMediaImagesAttribute()
+    {
+        return $this->getMedia('product-images');
     }
-
-    return asset('uploads/' . $this->image);
-}
 
 
 // public function setNameAttribute($value)

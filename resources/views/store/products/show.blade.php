@@ -13,35 +13,39 @@
         <div class="ps-container">
             <div class="row">
                 <div class="col-lg-10 col-md-12 col-lg-offset-1">
+                    @php
+                        $mediaImages = $product->getMedia('product-images');
+                        $allImages = $mediaImages->count() > 0
+                            ? $mediaImages->map(fn($m) => $m->getUrl())->toArray()
+                            : [$product->image_url];
+                        $firstImage = $allImages[0];
+                    @endphp
                     <div class="ps-product__thumbnail">
                         <div class="ps-product__preview">
                             <div class="ps-product__variants">
-                                <div class="item"><img src="{{ $product->image_url }}" alt=""></div>
-                                <div class="item"><img src="images/shoe-detail/2.jpg" alt=""></div>
-                                <div class="item"><img src="images/shoe-detail/3.jpg" alt=""></div>
-                                <div class="item"><img src="images/shoe-detail/3.jpg" alt=""></div>
-                                <div class="item"><img src="images/shoe-detail/3.jpg" alt=""></div>
+                                @foreach($allImages as $imgUrl)
+                                    <div class="item"><img src="{{ $imgUrl }}" alt="{{ $product->name }}"></div>
+                                @endforeach
                             </div><a class="popup-youtube ps-product__video"
-                                href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img src="{{ $product->image_url }}"
-                                    alt=""><i class="fa fa-play"></i></a>
+                                href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img src="{{ $firstImage }}"
+                                    alt="{{ $product->name }}"><i class="fa fa-play"></i></a>
                         </div>
                         <div class="ps-product__image">
-                            <div class="item"><img class="zoom" src="{{ $product->image_url }}" alt=""
-                                    data-zoom-image="{{ $product->image_url }}"></div>
-                            <div class="item"><img class="zoom" src="{{ $product->image_url }}" alt=""
-                                    data-zoom-image="{{ $product->image_url }}"></div>
-                            <div class="item"><img class="zoom" src="{{ $product->image_url }}" alt=""
-                                    data-zoom-image="{{ $product->image_url }}"></div>
+                            @foreach($allImages as $imgUrl)
+                                <div class="item"><img class="zoom" src="{{ $imgUrl }}" alt="{{ $product->name }}"
+                                        data-zoom-image="{{ $imgUrl }}"></div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="ps-product__thumbnail--mobile">
-                        <div class="ps-product__main-img"><img src="{{ $product->image_url }}" alt=""></div>
+                        <div class="ps-product__main-img"><img src="{{ $firstImage }}" alt="{{ $product->name }}"></div>
                         <div class="ps-product__preview owl-slider" data-owl-auto="true" data-owl-loop="true"
                             data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
                             data-owl-item="3" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="3"
                             data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on">
-                            <img src="{{ $product->image_url }}" alt=""><img src="{{ $product->image_url }}"
-                                alt=""><img src="{{ $product->image_url }}" alt="">
+                            @foreach($allImages as $imgUrl)
+                                <img src="{{ $imgUrl }}" alt="{{ $product->name }}">
+                            @endforeach
                         </div>
                     </div>
                     <div class="ps-product__info">
